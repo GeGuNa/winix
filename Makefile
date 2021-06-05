@@ -53,6 +53,9 @@ endif
 
 makedisk: $(FS_DEPEND)
 	$(Q)gcc -g -D MAKEFS_STANDALONE $(COMMON_CFLAGS) -w -I./include/fs_include -I./include $^ -o makedisk
+ifeq ($(KBUILD_VERBOSE),0)
+	@echo "CC \t makedisk"
+endif
 
 kbuild: $(ALLDIR)
 $(ALLDIR): FORCE
