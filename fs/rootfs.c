@@ -69,10 +69,12 @@ int blk_dev_io_write(char *buf, off_t off, size_t len){
 }
 
 int blk_dev_init(){
+#ifdef __wramp__
     if(raw_disk == NULL){
         raw_disk = _DISK_RAW;
         raw_disk_size = DISK_SIZE;
     }
+#endif
     rootfs_disk = raw_disk;
     rootfs_disk_size = raw_disk_size;
 

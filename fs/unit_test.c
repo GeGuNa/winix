@@ -220,7 +220,7 @@ int unit_test1(){
     ret = sys_close(curr_scheduling_proc, fd4);
     ASSERT(ret == EBADF);
 
-    printf("filesystem unit test passed");
+    printf("filesystem unit test 1 passed");
     return 0;
 }
 
@@ -258,4 +258,5 @@ void unit_test2(){
 
     ret = sys_close(curr_scheduling_proc, fd2);
     ASSERT(ret == 0);
+    printf("filesystem unit test 1 passed");
 }
