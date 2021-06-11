@@ -32,7 +32,7 @@ void main() {
     init_dev();
     init_fs_struct();
     register_tty_driver();
-    init_root_fs_driver();
+    register_root_fs_driver();
     init_pipe_driver();
     init_drivers();
     

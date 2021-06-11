@@ -311,7 +311,7 @@ int root_fs_ioctl(struct filp* file, int request_type, ptr_t* arg){
 static struct device_operations dops = {blk_dev_init, blk_dev_io_read, blk_dev_io_write, blk_dev_release};
 static struct filp_operations ops = {root_fs_open, root_fs_read, root_fs_write, root_fs_close, root_fs_ioctl};
 
-void init_root_fs_driver(){
+void register_root_fs_driver(){
     rootfs_dev.bops = &bops;
     register_device(&rootfs_dev, DEVICE_NAME, devid, S_IFREG, &dops, &ops);
 }
