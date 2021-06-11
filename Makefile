@@ -39,7 +39,7 @@ L_HEAD = winix/limits/limits_head.o
 L_TAIL = winix/limits/limits_tail.o
 KERNEL_O = winix/*.o kernel/system/*.o kernel/*.o fs/*.o fs/system/*.o driver/*.o include/*.o
 ALLDIR = winix lib init user kernel fs driver
-FS_DEPEND = fs/*.c fs/system/*.c fs/makefs_only/*.c 
+MAKEDISK_DEPEND = fs/*.c fs/system/*.c fs/makefs_only/*.c fs/make_disk/*.c
 DISK = include/disk.c
 START_TIME_FILE = include/startup_time.c
 SREC = $(shell find $(SREC_INCLUDE) -name "*.srec")
@@ -51,7 +51,7 @@ ifeq ($(KBUILD_VERBOSE),0)
 	@echo "LD \t winix.srec"
 endif
 
-makedisk: $(FS_DEPEND)
+makedisk: $(MAKEDISK_DEPEND)
 	$(Q)gcc -g -D MAKEFS_STANDALONE $(COMMON_CFLAGS) -w -I./include/fs_include -I./include $^ -o makedisk
 ifeq ($(KBUILD_VERBOSE),0)
 	@echo "CC \t makedisk"

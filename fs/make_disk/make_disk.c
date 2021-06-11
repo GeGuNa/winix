@@ -6,7 +6,8 @@
 #include <fs/cache.h>
 #include <kernel/proc.h>
 #include <fs/super.h>
-#include "makefs_only/cmake_util.h"
+#include "../makefs_only/cmake_util.h"
+#include "../makefs_only/srec_import.h"
 #include <assert.h>
 #include <stdio.h>
 #include <string.h>
@@ -21,7 +22,6 @@
 #include <winix/dev.h>
 #include <winix/compiler.h>
 #include <fs/super.h>
-#include "makefs_only/srec_import.h"
 
 void init_bitmap();
 char __X86_DISK_RAW[DISK_SIZE];

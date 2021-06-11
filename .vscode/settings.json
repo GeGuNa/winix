@@ -25,7 +25,8 @@
         "stdio.h": "c",
         "cstdio": "c",
         "srec_import.h": "c",
-        "compiler.h": "c"
+        "compiler.h": "c",
+        "cmake_util.h": "c"
     },
     "files.exclude": {
         "**/*.o": true,
