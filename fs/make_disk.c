@@ -117,13 +117,6 @@ void write_disk(char* path){
     fclose(fp);
 }
 
-void init_disk(){
-    int ret = makefs(__X86_DISK_RAW, DISK_SIZE);
-    if(ret){
-        printf("makefs failed");
-        _exit(1);
-    }
-}
 void combine_srec_binary_debug(struct winix_elf_list* elf_list, struct srec_binary* binary, struct srec_debug* debug){
     struct winix_elf* elf = &elf_list->elf;
     elf->binary_pc = binary->binary_pc;
@@ -241,10 +234,18 @@ int write_srec_to_disk(char* path, struct arguments* arguments){
     return 0;
 }
 
-void init_os(){
-    mock_init_proc();
+void init_os(char *disk, size_t size, bool is_makefs){
+    int ret;
+    set_raw_disk(disk, size);
     init_bitmap();
-    init_disk();
+    if(is_makefs){
+        ret = makefs(disk, size);
+        if(ret){
+            printf("makefs failed");
+            _exit(1);
+        }
+    }
+    mock_init_proc();
     init_dev();
     init_fs_struct();
     register_tty_driver();
@@ -262,13 +263,11 @@ int main(int argc, char** argv){
     argp_parse (&argp, argc, argv, 0, 0, &arguments);    
 
     if(arguments.source_path && arguments.output_path){
-        set_raw_disk(__X86_DISK_RAW, DISK_SIZE);
-        init_os();
+        init_os(__X86_DISK_RAW, DISK_SIZE, true);
         write_srec_to_disk(arguments.source_path, &arguments);
         write_disk(arguments.output_path);
     }else if(arguments.x86_unit_test){
-        set_raw_disk(__X86_DISK_RAW, DISK_SIZE);
-        init_os();
+        init_os(__X86_DISK_RAW, DISK_SIZE, true);
         unit_test1();
         unit_test2();
     }else if(arguments.wramp_unit_test){
