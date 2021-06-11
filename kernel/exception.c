@@ -174,7 +174,7 @@ PRIVATE void gpf_handler() {
         if(i % 4 == 0)
             kprintf("\n");
     }
-    kprintf("\nptable: ");
+    kprintf("\nProtection Table: \n");
     kreport_ptable(curr_scheduling_proc);
 
 #endif
