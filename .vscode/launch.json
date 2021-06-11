@@ -30,7 +30,7 @@
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/makedisk",
-            "args": ["-d", "-t", "2048"],
+            "args": ["-x", "-t", "2048"],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
             "environment": [],

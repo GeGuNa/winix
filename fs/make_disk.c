@@ -36,7 +36,7 @@ static char args_doc[] = "-d -s [Source Path] -o [Output Path]";
 /* The options we understand. */
 static struct argp_option options[] = {
         {"offset",  't', "OFFSET1",      0,  "Srec Text Segment Offset" },
-        {"debug",  'd', 0,      OPTION_ARG_OPTIONAL,  "Is Debugging" },
+        {"x86 unit test",  'x', 0,      OPTION_ARG_OPTIONAL,  "x86 unit test" },
         {"output",   'o', "OUTPUT", 0, "Output Path" },
         {"source",   's', "SOURCE", 0, "Source Path" },
         {"unix time",   'u', "UNIX_TIME", 0, "Unix Time" },
@@ -48,7 +48,7 @@ struct arguments
 {
     char *output_path;
     char *source_path;
-    int debug;
+    int x86_unit_test;
     int do_unit_test;
     unsigned int unix_time;
     int offset;
@@ -66,8 +66,8 @@ static error_t parse_opt (int key, char *arg, struct argp_state *state)
         case 't':
             arguments->offset = arg ? atoi(arg) : 2048;
             break;
-        case 'd':
-            arguments->debug = true;
+        case 'x':
+            arguments->x86_unit_test = true;
             break;
         case 'o':
             arguments->output_path = arg;
@@ -236,23 +236,7 @@ int write_srec_to_disk(char* path, struct arguments* arguments){
     return 0;
 }
 
-int main(int argc, char** argv){
-    struct arguments arguments;
-    memset(&arguments, 0, sizeof(struct arguments));
-
-    arguments.debug = false;
-    arguments.offset = 2048;
-    argp_parse (&argp, argc, argv, 0, 0, &arguments);
-    if( arguments.source_path == NULL && arguments.output_path == NULL && arguments.debug == false){
-        fprintf(stderr,"Format ERROR: source file = %s\n"
-                       "output file = %s\n"
-                       "is debug %d\n"
-                       "Offset %d\n",
-                arguments.source_path, arguments.output_path, arguments.debug, arguments.offset);
-        return 1;
-    }
-
-    set_raw_disk(__X86_DISK_RAW, DISK_SIZE);
+void init_os(){
     mock_init_proc();
     init_bitmap();
     init_disk();
@@ -260,11 +244,31 @@ int main(int argc, char** argv){
     init_tty();
     init_fs();
     init_drivers();
+}
+
+int main(int argc, char** argv){
+    struct arguments arguments;
+    memset(&arguments, 0, sizeof(struct arguments));
+
+    arguments.x86_unit_test = false;
+    arguments.offset = 2048;
+    argp_parse (&argp, argc, argv, 0, 0, &arguments);
+    if( arguments.source_path == NULL && arguments.output_path == NULL && arguments.x86_unit_test == false){
+        fprintf(stderr,"Format ERROR: source file = %s\n"
+                       "output file = %s\n"
+                       "is debug %d\n"
+                       "Offset %d\n",
+                arguments.source_path, arguments.output_path, arguments.x86_unit_test, arguments.offset);
+        return 1;
+    }
+
+    set_raw_disk(__X86_DISK_RAW, DISK_SIZE);
+    init_os();
 
     if(arguments.source_path && arguments.output_path){
         write_srec_to_disk(arguments.source_path, &arguments);
         write_disk(arguments.output_path);
-    }else if(arguments.debug){
+    }else if(arguments.x86_unit_test){
         unit_test1();
         unit_test2();
     }
