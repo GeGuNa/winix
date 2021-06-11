@@ -171,7 +171,7 @@ PRIVATE void gpf_handler() {
 
     for(i = 1; i <= REGS_NR; i++){
         kprintf("$%02d: 0x%08x | ", i, curr_scheduling_proc->ctx.m.regs[i]);
-        if(i % 4 == 0)
+        if(i % 5 == 0)
             kprintf("\n");
     }
     kprintf("\nProtection Table: \n");

@@ -136,7 +136,8 @@ int init_inode_non_disk(struct inode* ino, ino_t num, struct device* dev, struct
     if(sb){
         bnr = ((num * sb->s_inode_size) / blocksize) + sb->s_inode_tablenr;
         if(bnr * blocksize >= sb->s_inode_tablenr * blocksize + sb->s_inode_table_size){
-            KDEBUG(("ino %d exceeding\n", num));
+            KDEBUG(("ino %d exceeding size, inode size %d blk size %d inode table nr %d\n", 
+            num, sb->s_inode_size, blocksize, sb->s_inode_tablenr));
             return ERR;
         }
         ino->i_ndblock = bnr;
