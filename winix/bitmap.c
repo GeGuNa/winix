@@ -431,6 +431,23 @@ int bitmap_xor(unsigned int *map1, unsigned int *map2, int map_len){
     return OK;
 }
 
+
+/**
+ * print the given bitmap
+ * @param file
+ * @param p   
+ * @param len 
+ */
+void kreport_filp_bitmap(struct filp* file, unsigned int *p, int len){
+    int i;
+    for( i = 0; i < len; i++){
+        filp_kprint(file, "0x%08x ",*p++);
+        if((i+1) % 8 == 0)
+            kprintf("\n");
+    }
+    filp_kprint(file, "\n");
+}
+
 /**
  * print the given bitmap
  * @param p   

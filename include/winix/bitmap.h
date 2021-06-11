@@ -47,7 +47,7 @@ int bitmap_extract_pattern(unsigned int *map, int map_len, int heap_break, struc
 
 int count_bits(unsigned int *map, int map_len, int flags);
 void kreport_bitmap(unsigned int *p, int len);
-
+void kreport_filp_bitmap(struct filp* file, unsigned int *p, int len);
 
 #define bitmap_search(map,map_len,num)  bitmap_search_from((map),(map_len), 0 , (num))
 
