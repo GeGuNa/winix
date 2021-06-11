@@ -24,7 +24,6 @@
 #include "makefs_only/srec_import.h"
 
 void init_bitmap();
-char _DISK_RAW[DISK_SIZE];
 char __X86_DISK_RAW[DISK_SIZE];
 
 /* Program documentation. */
