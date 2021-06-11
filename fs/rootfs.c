@@ -9,6 +9,9 @@
 const char* DEVICE_NAME = "sda";
 const char* FS_TYPE = "wfs";
 
+static char* raw_disk = NULL;
+static size_t raw_disk_size = 0;
+
 static char* rootfs_disk;
 static size_t rootfs_disk_size;
 
@@ -21,6 +24,11 @@ struct superblock* get_sb(struct device* id){
     if(id == &rootfs_dev)
         return &root_sb;
     return NULL;
+}
+
+void set_raw_disk(char *disk, size_t size){
+    raw_disk = disk;
+    raw_disk_size = size;
 }
 
 int blk_dev_io_read(char *buf, off_t off, size_t len){
@@ -61,8 +69,12 @@ int blk_dev_io_write(char *buf, off_t off, size_t len){
 }
 
 int blk_dev_init(){
-    rootfs_disk_size = DISK_SIZE;
-    rootfs_disk = _DISK_RAW;
+    if(raw_disk == NULL){
+        raw_disk = _DISK_RAW;
+        raw_disk_size = DISK_SIZE;
+    }
+    rootfs_disk = raw_disk;
+    rootfs_disk_size = raw_disk_size;
 
     memcpy(&root_sb, rootfs_disk, sizeof(struct superblock));
     arch_superblock(&root_sb);

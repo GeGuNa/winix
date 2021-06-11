@@ -64,6 +64,7 @@ $(ALLDIR): FORCE
 $(DISK): $(SREC) makedisk
 	$(Q)./makedisk -t $(TEXT_OFFSET) -o $(DISK) -s $(SREC_INCLUDE) -u $(CURR_UNIX_TIME)
 ifeq ($(KBUILD_VERBOSE),0)
+	@echo "RUN \t makedisk"
 	@echo "LD \t disk.c"
 endif
 	
