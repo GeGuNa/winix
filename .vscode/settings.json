@@ -23,7 +23,9 @@
         "cache.h": "c",
         "stdlib.h": "c",
         "stdio.h": "c",
-        "cstdio": "c"
+        "cstdio": "c",
+        "srec_import.h": "c",
+        "compiler.h": "c"
     },
     "files.exclude": {
         "**/*.o": true,

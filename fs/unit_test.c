@@ -36,8 +36,8 @@ int unit_test1(){
     init_fs();
     init_tty();
     init_drivers();
-
     mock_init_proc();
+
     fd = sys_open(curr_scheduling_proc, filename ,O_CREAT | O_RDWR, 0775);
     ASSERT(fd == 0);
     fd2 = sys_dup(curr_scheduling_proc, fd);
