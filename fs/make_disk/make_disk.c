@@ -36,7 +36,6 @@ static char args_doc[] = "-d -s [Source Path] -o [Output Path]";
 static struct argp_option options[] = {
         {"offset",  't', "OFFSET1",      0,  "Srec Text Segment Offset" },
         {"x86 unit test",  'x', 0,      OPTION_ARG_OPTIONAL,  "x86 unit test" },
-        {"wramp unit test",  'w', 0,      OPTION_ARG_OPTIONAL,  "wramp unit test" },
         {"output",   'o', "OUTPUT", 0, "Output Path" },
         {"source",   's', "SOURCE", 0, "Source Path" },
         {"unix time",   'u', "UNIX_TIME", 0, "Unix Time" },
@@ -49,7 +48,6 @@ struct arguments
     char *output_path;
     char *source_path;
     bool x86_unit_test;
-    bool wramp_unit_test;
     int do_unit_test;
     unsigned int unix_time;
     int offset;
@@ -69,9 +67,6 @@ static error_t parse_opt (int key, char *arg, struct argp_state *state)
             break;
         case 'x':
             arguments->x86_unit_test = true;
-            break;
-        case 'w':
-            arguments->wramp_unit_test = true;
             break;
         case 'o':
             arguments->output_path = arg;
@@ -249,11 +244,7 @@ int main(int argc, char** argv){
         init_os(__X86_DISK_RAW, DISK_SIZE, true);
         unit_test1();
         unit_test2();
-    }else if(arguments.wramp_unit_test){
-        printf("wramp unit test\n");
     }
 
-//    do_tests();
-//    printf("argc %d argv 0 %s \n", argc, argv[0]);
     return 0;
 }
