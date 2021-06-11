@@ -5,7 +5,7 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "File System Run Makedisk",
+            "name": "Makedisk",
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/makedisk",
@@ -26,11 +26,32 @@
             "miDebuggerPath": "/usr/bin/gdb"
         },
         {
-            "name": "File System Run Unit Test",
+            "name": "X86 FS Unit Test",
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/makedisk",
             "args": ["-x", "-t", "2048"],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "setupCommands": [
+                {
+                    "description": "Enable pretty-printing for gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                }
+            ],
+            "preLaunchTask": "GCC Build makedisk",
+            "miDebuggerPath": "/usr/bin/gdb"
+        },
+        {
+            "name": "Wramp FS Unit Test",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/makedisk",
+            "args": ["-w", "-t", "2048"],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
             "environment": [],

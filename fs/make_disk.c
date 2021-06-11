@@ -37,6 +37,7 @@ static char args_doc[] = "-d -s [Source Path] -o [Output Path]";
 static struct argp_option options[] = {
         {"offset",  't', "OFFSET1",      0,  "Srec Text Segment Offset" },
         {"x86 unit test",  'x', 0,      OPTION_ARG_OPTIONAL,  "x86 unit test" },
+        {"wramp unit test",  'w', 0,      OPTION_ARG_OPTIONAL,  "wramp unit test" },
         {"output",   'o', "OUTPUT", 0, "Output Path" },
         {"source",   's', "SOURCE", 0, "Source Path" },
         {"unix time",   'u', "UNIX_TIME", 0, "Unix Time" },
@@ -48,7 +49,8 @@ struct arguments
 {
     char *output_path;
     char *source_path;
-    int x86_unit_test;
+    bool x86_unit_test;
+    bool wramp_unit_test;
     int do_unit_test;
     unsigned int unix_time;
     int offset;
@@ -68,6 +70,9 @@ static error_t parse_opt (int key, char *arg, struct argp_state *state)
             break;
         case 'x':
             arguments->x86_unit_test = true;
+            break;
+        case 'w':
+            arguments->wramp_unit_test = true;
             break;
         case 'o':
             arguments->output_path = arg;
@@ -252,25 +257,20 @@ int main(int argc, char** argv){
 
     arguments.x86_unit_test = false;
     arguments.offset = 2048;
-    argp_parse (&argp, argc, argv, 0, 0, &arguments);
-    if( arguments.source_path == NULL && arguments.output_path == NULL && arguments.x86_unit_test == false){
-        fprintf(stderr,"Format ERROR: source file = %s\n"
-                       "output file = %s\n"
-                       "is debug %d\n"
-                       "Offset %d\n",
-                arguments.source_path, arguments.output_path, arguments.x86_unit_test, arguments.offset);
-        return 1;
-    }
-
-    set_raw_disk(__X86_DISK_RAW, DISK_SIZE);
-    init_os();
+    argp_parse (&argp, argc, argv, 0, 0, &arguments);    
 
     if(arguments.source_path && arguments.output_path){
+        set_raw_disk(__X86_DISK_RAW, DISK_SIZE);
+        init_os();
         write_srec_to_disk(arguments.source_path, &arguments);
         write_disk(arguments.output_path);
     }else if(arguments.x86_unit_test){
+        set_raw_disk(__X86_DISK_RAW, DISK_SIZE);
+        init_os();
         unit_test1();
         unit_test2();
+    }else if(arguments.wramp_unit_test){
+        printf("wramp unit test\n");
     }
 
 //    do_tests();
