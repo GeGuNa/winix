@@ -59,6 +59,32 @@ const char *errlist[_NERROR] = {
     "ENOSYS",    /* ENOSYS */
     "ENOTEMPTY",    /* ENOTEMPTY */
 };
+#define IS_SERIAL_CODE(c) (isprint(c) || c - 7 < 6)
+/**
+ * Writes a character to serial port 1.
+ **/
+int kputc(const int c) {
+    if(IS_SERIAL_CODE(c)){
+        while(!(RexSp1->Stat & 2));
+        RexSp1->Tx = c;
+        return c;
+    }
+    return EOF;
+}
+
+/**
+ * print the string to serial port 1
+ * @param s 
+ */
+int kputs(const char *s) {
+    int count = 0;
+    while(*s){
+        if(kputc(*s++) != EOF)
+            count++;
+    }
+    return count;    
+}
+
 
 const char* kstr_error(int err){
     if(err < 0){

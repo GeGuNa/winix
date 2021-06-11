@@ -246,8 +246,10 @@ void init_os(){
     init_bitmap();
     init_disk();
     init_dev();
+    init_fs_struct();
     init_tty();
-    init_fs();
+    init_root_fs();
+    init_pipe();
     init_drivers();
 }
 

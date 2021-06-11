@@ -37,7 +37,7 @@ bool has_file_access(struct proc* who, struct inode* ino, mode_t mode);
 int get_inode_by_path(struct proc* who, char *path, struct inode** inode);
 int alloc_block(inode_t *ino, struct device* id);
 int makefs( char* disk_raw, size_t disk_size_words);
-void init_fs();
+void init_fs_struct();
 int init_filp_by_inode(struct filp* filp, struct inode* inode);
 int init_inode_non_disk(struct inode* ino, ino_t num, struct device* dev, struct superblock* sb);
 void init_pipe();

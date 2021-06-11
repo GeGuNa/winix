@@ -10,7 +10,7 @@ void init_dev(){
 
 void init_drivers(){
     struct device* dev;
-    list_for_each_entry(struct device, dev, &devices_list, list){
+    list_for_each_entry_reverse(struct device, dev, &devices_list, list){
         if(dev->dops && dev->dops->dev_init){
             dev->dops->dev_init();
         }

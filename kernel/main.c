@@ -30,8 +30,10 @@ void main() {
     
     init_bitmap();
     init_dev();
-    init_fs();
+    init_fs_struct();
     init_tty();
+    init_root_fs();
+    init_pipe();
     init_drivers();
     
     init_mem_table();

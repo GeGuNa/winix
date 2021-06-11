@@ -60,6 +60,7 @@ void init_dev(){
 }
 
 void init_tty(){
+  
   int fd, ret;
   fd = open("/dev/tty1", O_RDONLY);
   CHECK_SYSCALL(fd == 0);

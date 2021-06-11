@@ -233,7 +233,7 @@ void unit_test2(){
     // char *filename = "/foo.txt";
     // init_bitmap();
     // init_dev();
-    // init_fs();
+    // init_fs_struct();
     // init_tty();
     // init_drivers();
     // mock_init_proc();
