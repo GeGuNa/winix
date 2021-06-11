@@ -33,7 +33,7 @@ void main() {
     init_fs_struct();
     init_tty();
     init_root_fs_driver();
-    init_pipe();
+    init_pipe_driver();
     init_drivers();
     
     init_mem_table();

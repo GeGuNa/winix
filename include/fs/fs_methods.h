@@ -40,7 +40,7 @@ int makefs( char* disk_raw, size_t disk_size_words);
 void init_fs_struct();
 int init_filp_by_inode(struct filp* filp, struct inode* inode);
 int init_inode_non_disk(struct inode* ino, ino_t num, struct device* dev, struct superblock* sb);
-void init_pipe();
+void init_pipe_driver();
 int remove_inode_from_dir(struct proc* who,struct inode* dir, struct inode* target, char* name);
 int get_fd(struct proc *curr, int start, int *open_slot, filp_t **fpt);
 int add_inode_to_directory(struct proc* who,inode_t* dir, inode_t* ino, char* string);
