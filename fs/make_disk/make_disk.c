@@ -233,26 +233,6 @@ int write_srec_to_disk(char* path, struct arguments* arguments){
     return 0;
 }
 
-void init_os(char *disk, size_t size, bool is_makefs){
-    int ret;
-    set_raw_disk(disk, size);
-    init_bitmap();
-    if(is_makefs){
-        ret = makefs(disk, size);
-        if(ret){
-            printf("makefs failed");
-            _exit(1);
-        }
-    }
-    mock_init_proc();
-    init_dev();
-    init_fs_struct();
-    register_tty_driver();
-    register_root_fs_driver();
-    register_pipe_driver();
-    init_drivers();
-}
-
 int main(int argc, char** argv){
     struct arguments arguments;
     memset(&arguments, 0, sizeof(struct arguments));

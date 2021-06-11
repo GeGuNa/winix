@@ -19,6 +19,26 @@ void mock_init_proc(){
     curr_syscall_caller = curr_scheduling_proc;
 }
 
+void init_os(char *disk, size_t size, bool is_makefs){
+    int ret;
+    set_raw_disk(disk, size);
+    init_bitmap();
+    if(is_makefs){
+        ret = makefs(disk, size);
+        if(ret){
+            printf("makefs failed");
+            _exit(1);
+        }
+    }
+    mock_init_proc();
+    init_dev();
+    init_fs_struct();
+    register_tty_driver();
+    register_root_fs_driver();
+    register_pipe_driver();
+    init_drivers();
+}
+
 void emulate_fork(struct proc* p1, struct proc* p2){
     int i;
     struct filp* file;
