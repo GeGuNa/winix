@@ -25,7 +25,7 @@
 
 void init_bitmap();
 
-char DISK_RAW[DISK_SIZE];
+char _DISK_RAW[DISK_SIZE];
 
 /* Program documentation. */
 static char doc[] = "Generate FS Disk";
@@ -95,9 +95,9 @@ void write_disk(char* path){
     char curr_dir[100];
     int i;
     char filename[] = "disk.c";
-    char str2[] = "unsigned int DISK_RAW[] = {\n";
+    char str2[] = "unsigned int _DISK_RAW[] = {\n";
     char str3[] = "};\n";
-    unsigned int *val = (unsigned int*)DISK_RAW;
+    unsigned int *val = (unsigned int*)_DISK_RAW;
     FILE *fp;
     getcwd(curr_dir, 100);
 
@@ -113,7 +113,7 @@ void write_disk(char* path){
 }
 
 void init_disk(){
-    int ret = makefs(DISK_RAW, DISK_SIZE);
+    int ret = makefs(_DISK_RAW, DISK_SIZE);
     if(ret){
         printf("makefs failed");
         _exit(1);

@@ -62,7 +62,7 @@ int blk_dev_io_write(char *buf, off_t off, size_t len){
 
 int blk_dev_init(){
     rootfs_disk_size = DISK_SIZE;
-    rootfs_disk = DISK_RAW;
+    rootfs_disk = _DISK_RAW;
 
     memcpy(&root_sb, rootfs_disk, sizeof(struct superblock));
     arch_superblock(&root_sb);

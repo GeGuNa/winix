@@ -32,7 +32,7 @@ struct block_operations{
 #define REAR    0
 
 /* When a block is released, the type of usage is passed to put_block_buffer(). */
-#define WRITE_IMMED   1 /* block should be written to DISK_RAW now */
+#define WRITE_IMMED   1 /* block should be written to _DISK_RAW now */
 #define ONE_SHOT      2 /* set if block not likely to be needed soon */
 
 

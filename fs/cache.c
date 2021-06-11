@@ -199,7 +199,7 @@ void flush_super_block(struct device* dev){
     dev->dops->dev_write((char*)sb, 0, sizeof(struct superblock));
 
 //    dev->dops->dev_read((char*)&sb1, 0, sizeof(struct superblock));
-//    memcpy(&sb2, DISK_RAW, sizeof(struct superblock));
+//    memcpy(&sb2, _DISK_RAW, sizeof(struct superblock));
 //    KDEBUG(("sb %d %d %d \n", sb1.s_inode_per_block, sb2.s_inode_per_block, sb->s_inode_per_block));
 }
 
