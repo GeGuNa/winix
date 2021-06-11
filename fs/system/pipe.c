@@ -338,7 +338,7 @@ int pipe_dev_open(){
 
 static struct filp_operations pipe_fops = {pipe_open, pipe_read, pipe_write, pipe_close};
 
-void init_pipe_driver(){
+void register_pipe_driver(){
     sb.s_block_size = PAGE_LEN;
     register_device(&pipe_dev, name, pipe_devid, S_IFIFO, NULL, &pipe_fops);
 }
