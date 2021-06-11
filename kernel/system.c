@@ -283,6 +283,7 @@ int syscall_reply2(int syscall_num, int reply, int dest, struct message* m){
         }
         klog("Syscall %s return %s to Proc %s[%d]\n",syscall_str[syscall_num] , p, pDest->name, dest);
         // kreport_filp_bitmap(tty2_filp,  pDest->protection_table, PTABLE_LEN);
+        // kdebug_superblock();
     }
     if(pDest){
         m->type = syscall_num;

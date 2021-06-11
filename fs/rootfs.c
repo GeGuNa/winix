@@ -68,6 +68,11 @@ int blk_dev_io_write(char *buf, off_t off, size_t len){
     return len;
 }
 
+void kdebug_superblock(){
+    KDEBUG(("s_block_inuse: %d | s_inode_inuse: %d | s_free_blocks: %d | s_free_inodes: %d |\n s_block_size: %d | s_inode_size: %d | s_inode_limit: %d | s_rootnr: %d |\n s_superblock_nr: %d | s_superblock_size: %d | s_blockmapnr: %d |  s_blockmap_size: %d |\n s_inodemapnr: %d |  s_inodemap_size: %d | s_inode_tablenr: %d | s_inode_table_size: %d |\n s_inode_per_block %d\n", 
+        root_sb.s_block_inuse, root_sb.s_inode_inuse, root_sb.s_free_blocks, root_sb.s_free_inodes, root_sb.s_block_size, root_sb.s_inode_size, root_sb.s_inode_limit, root_sb.s_rootnr, root_sb.s_superblock_nr, root_sb.s_superblock_size, root_sb.s_blockmapnr, root_sb. s_blockmap_size, root_sb.s_inodemapnr, root_sb. s_inodemap_size, root_sb.s_inode_tablenr, root_sb.s_inode_table_size, root_sb.s_inode_per_block));
+}
+
 int blk_dev_init(){
     int i;
 #ifdef __wramp__
@@ -78,18 +83,13 @@ int blk_dev_init(){
 #endif
     rootfs_disk = raw_disk;
     rootfs_disk_size = raw_disk_size;
-
- 
     memcpy(&root_sb, rootfs_disk, sizeof(struct superblock));
     arch_superblock(&root_sb);
     ASSERT(root_sb.magic == SUPER_BLOCK_MAGIC);
     ASSERT(root_sb.s_block_size == BLOCK_SIZE);
  
     #ifdef __wramp__
-
-       KDEBUG(("s_block_inuse: %d | s_inode_inuse: %d | s_free_blocks: %d | s_free_inodes: %d | s_block_size: %d | s_inode_size: %d | s_inode_limit: %d | s_rootnr: %d | s_superblock_nr: %d | s_superblock_size: %d | s_blockmapnr: %d |  s_blockmap_size: %d | s_inodemapnr: %d |  s_inodemap_size: %d | s_inode_tablenr: %d | s_inode_table_size: %d | s_inode_per_block %d", 
-        root_sb.s_block_inuse, root_sb.s_inode_inuse, root_sb.s_free_blocks, root_sb.s_free_inodes, root_sb.s_block_size, root_sb.s_inode_size, root_sb.s_inode_limit, root_sb.s_rootnr, root_sb.s_superblock_nr, root_sb.s_superblock_size, root_sb.s_blockmapnr, root_sb. s_blockmap_size, root_sb.s_inodemapnr, root_sb. s_inodemap_size, root_sb.s_inode_tablenr, root_sb.s_inode_table_size, root_sb.s_inode_per_block));
-
+    kdebug_superblock();
     KDEBUG(("\nsuperblock: block in use %d inode table size %d\n", root_sb.s_block_inuse, root_sb.s_inode_table_size));
     #endif
     return 0;
