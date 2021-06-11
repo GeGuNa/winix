@@ -236,6 +236,7 @@ int exec_welf(struct proc* who, char* path, char *argv[], char *envp[], bool is_
     if(trace_syscall){
         klog("%s[%d] calls execve() to excute %s\n", who->name, who->pid, path);
     }
+
     set_proc(who, (void (*)())elf.binary_pc, path);
     ret = OK;
 
