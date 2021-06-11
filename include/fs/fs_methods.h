@@ -57,6 +57,7 @@ int sys_creat(struct proc* who, char* path, mode_t mode);
 size_t get_inode_total_size_word(struct inode* ino);
 blkcnt_t get_inode_blocks(struct inode* ino);
 struct superblock* get_sb(struct device* id);
+void set_raw_disk(char *disk, size_t size);
 void init_inodetable();
 int read_inode(int num, inode_t **inode, struct device*);
 inode_t* get_inode(int num, struct device*);

@@ -24,8 +24,8 @@
 #include "makefs_only/srec_import.h"
 
 void init_bitmap();
-
 char _DISK_RAW[DISK_SIZE];
+char __X86_DISK_RAW[DISK_SIZE];
 
 /* Program documentation. */
 static char doc[] = "Generate FS Disk";
@@ -97,7 +97,7 @@ void write_disk(char* path){
     char filename[] = "disk.c";
     char str2[] = "unsigned int _DISK_RAW[] = {\n";
     char str3[] = "};\n";
-    unsigned int *val = (unsigned int*)_DISK_RAW;
+    unsigned int *val = (unsigned int*)__X86_DISK_RAW;
     FILE *fp;
     getcwd(curr_dir, 100);
 
@@ -113,7 +113,7 @@ void write_disk(char* path){
 }
 
 void init_disk(){
-    int ret = makefs(_DISK_RAW, DISK_SIZE);
+    int ret = makefs(__X86_DISK_RAW, DISK_SIZE);
     if(ret){
         printf("makefs failed");
         _exit(1);
@@ -252,11 +252,12 @@ int main(int argc, char** argv){
         return 1;
     }
 
-
+    set_raw_disk(__X86_DISK_RAW, DISK_SIZE);
     mock_init_proc();
     init_bitmap();
     init_disk();
     init_dev();
+    init_tty();
     init_fs();
     init_drivers();
 

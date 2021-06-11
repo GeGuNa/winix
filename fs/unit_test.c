@@ -30,13 +30,6 @@ int unit_test1(){
 
     pcurr2.pid = 2;
     pcurr2.proc_nr = 2;
-    
-    init_bitmap();
-    init_dev();
-    init_fs();
-    init_tty();
-    init_drivers();
-    mock_init_proc();
 
     fd = sys_open(curr_scheduling_proc, filename ,O_CREAT | O_RDWR, 0775);
     ASSERT(fd == 0);
@@ -233,10 +226,18 @@ int unit_test1(){
 
 #define DIR_LIMIT   5
 void unit_test2(){
-
-    int ret;
-    int fd1, fd2, fd3, fd4;
+    int ret, fd, fd1, fd2, fd3, fd4, i;
+    struct stat statbuf, statbuf2;
     struct dirent dir[DIR_LIMIT];
+    
+    // char *filename = "/foo.txt";
+    // init_bitmap();
+    // init_dev();
+    // init_fs();
+    // init_tty();
+    // init_drivers();
+    // mock_init_proc();
+
     ret = sys_mkdir(curr_scheduling_proc, "/bin", 0x755);
     ASSERT(ret == 0);
 
