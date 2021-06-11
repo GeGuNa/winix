@@ -18,6 +18,7 @@ void emulate_fork(struct proc* p1, struct proc* p2);
 void mock_init_proc();
 void _assert(int expression, int line, char* filename);
 void register_tty_driver();
+void init_os(char *disk, size_t size, bool is_makefs);
 
 int dkprintf(struct proc* who, int fd, const char* format, ...);
 #endif //FS_CMAKE_UTIL_H
