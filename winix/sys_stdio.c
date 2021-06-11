@@ -396,7 +396,7 @@ int kprintf_vm( struct filp* file, const char *orignal_format, void *arg, ptr_t 
     return this_buffer->total_count;
 }
 
-int filp_kprint(struct filp* file, const char* format, ...){
+int kprintf_filp(struct filp* file, const char* format, ...){
     void *arg = &format;
     arg = ((char*)arg) + 1;
 
