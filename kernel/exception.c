@@ -126,7 +126,7 @@ PRIVATE void serial2_handler() {
 }
 
 #define PRINT_DEBUG_REG(pc,sp,ra)\
-    kprintf("$pc 0x%04x, $sp 0x%04x $ra 0x%04x\n",pc,sp,ra)
+    kprintf("$pc 0x%08x | $sp($14): 0x%08x | $ra($15): 0x%08x\n",pc,sp,ra)
 
 /**
  * General Protection Fault.
@@ -139,6 +139,7 @@ PRIVATE void gpf_handler() {
     ptr_t* pc;
     int sp;
     int val;
+    int i;
     // is the current process a valid one?
     ASSERT(IS_PROCN_OK(curr_scheduling_proc->proc_nr));
     trace_syscall = false;
@@ -148,16 +149,17 @@ PRIVATE void gpf_handler() {
     if(!is_vaddr_accessible(curr_scheduling_proc->ctx.m.sp, curr_scheduling_proc)){
         kprintf("\nStack Overflow");
     }
-    kprintf("\nGeneral Protection Fault: \"%s (%d)\" Rbase=0x%x Stack Top=0x%x\n",
+    kprintf("\nGeneral Protection Fault: \"%s (%d)\"\n Rbase=0x%x Stack Top=0x%x Protection Table=0x%x\n",
         curr_scheduling_proc->name,
         curr_scheduling_proc->pid,
         curr_scheduling_proc->ctx.rbase,
-        curr_scheduling_proc->stack_top);
+        curr_scheduling_proc->stack_top,
+        curr_scheduling_proc->ctx.ptable);
     pc = get_physical_addr(get_pc_ptr(curr_scheduling_proc),curr_scheduling_proc);
 
     kprintf("Virtual  ");
     PRINT_DEBUG_REG(get_virtual_addr(pc,curr_scheduling_proc),
-                                    sp,
+                                    curr_scheduling_proc->ctx.m.sp,
                                     curr_scheduling_proc->ctx.m.ra);
 
     kprintf("Physical ");
@@ -166,9 +168,17 @@ PRIVATE void gpf_handler() {
         get_physical_addr(curr_scheduling_proc->ctx.m.ra, curr_scheduling_proc));    
 
     // kprintf("Current Instruction: 0x%08x\n",*pc);
+
+    for(i = 1; i <= REGS_NR; i++){
+        kprintf("$%02d: 0x%08x | ", i, curr_scheduling_proc->ctx.m.regs[i]);
+        if(i % 4 == 0)
+            kprintf("\n");
+    }
+    kprintf("\nptable: ");
+    kreport_ptable(curr_scheduling_proc);
+
 #endif
 
-    
     if(IS_KERNEL_PROC(curr_scheduling_proc))
         _panic("kernel crashed",NULL);
 
