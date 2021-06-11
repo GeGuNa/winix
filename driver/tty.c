@@ -444,7 +444,7 @@ void init_tty_filp(struct filp** _file, struct device* dev, struct tty_state* st
     *_file = file;
 }
 
-void init_tty(){
+void register_tty_driver(){
     init_tty_filp(&tty1_filp, &_tty_dev, &tty1_state);
     init_tty_filp(&tty2_filp, &_tty2_dev, &tty2_state);
 

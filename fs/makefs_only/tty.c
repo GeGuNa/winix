@@ -46,7 +46,7 @@ int tty_dev_release(){
 }
 
 
-void init_tty(){
+void register_tty_driver(){
     dops.dev_init = tty_dev_init;
     dops.dev_read = tty_dev_io_read;
     dops.dev_write = tty_dev_io_write;

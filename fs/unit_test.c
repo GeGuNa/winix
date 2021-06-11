@@ -234,7 +234,7 @@ void unit_test2(){
     // init_bitmap();
     // init_dev();
     // init_fs_struct();
-    // init_tty();
+    // register_tty_driver();
     // init_drivers();
     // mock_init_proc();
 

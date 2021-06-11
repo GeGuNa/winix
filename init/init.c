@@ -59,7 +59,7 @@ void init_dev(){
 
 }
 
-void init_tty(){
+void register_tty_driver(){
   
   int fd, ret;
   fd = open("/dev/tty1", O_RDONLY);
@@ -118,7 +118,7 @@ int main(int argc, char **argv)
   int i, ret, fd, read_nr;
 
   init_dev();
-  init_tty();
+  register_tty_driver();
   
   pid = vfork();
   if (pid == 0)
