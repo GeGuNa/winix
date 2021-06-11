@@ -15,6 +15,7 @@ tools/kdbg_srec/*.kdbg
 include/srec/*.verbose
 include/srec/*.srec
 makedisk
+wramp_unit_test
 fs/Debug/
 a.out
 include/*.c

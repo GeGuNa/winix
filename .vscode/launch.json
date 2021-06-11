@@ -50,7 +50,7 @@
             "name": "Wramp FS Unit Test",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceFolder}/makedisk",
+            "program": "${workspaceFolder}/wramp_unit_test",
             "args": ["-w", "-t", "2048"],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
@@ -64,7 +64,7 @@
                     "ignoreFailures": true
                 }
             ],
-            "preLaunchTask": "GCC Build makedisk",
+            "preLaunchTask": "GCC Build wramp_unitest",
             "miDebuggerPath": "/usr/bin/gdb"
         }
     ]
