@@ -265,6 +265,7 @@ int main(int argc, char** argv){
         write_disk(arguments.output_path);
     }else if(arguments.debug){
         unit_test1();
+        unit_test2();
     }
 
 //    do_tests();

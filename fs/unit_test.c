@@ -25,12 +25,13 @@ int unit_test1(){
     int ret, fd, fd2, fd3, fd4, i;
     int pipe_fd[2];
     struct stat statbuf, statbuf2;
-    init_bitmap();
+    
     char *filename = "/foo.txt";
 
     pcurr2.pid = 2;
     pcurr2.proc_nr = 2;
-
+    
+    init_bitmap();
     init_dev();
     init_fs();
     init_tty();
@@ -228,4 +229,32 @@ int unit_test1(){
 
     printf("filesystem unit test passed");
     return 0;
+}
+
+#define DIR_LIMIT   5
+void unit_test2(){
+
+    int ret;
+    int fd1, fd2, fd3, fd4;
+    struct dirent dir[DIR_LIMIT];
+    ret = sys_mkdir(curr_scheduling_proc, "/bin", 0x755);
+    ASSERT(ret == 0);
+
+    ret = sys_chdir(curr_scheduling_proc, "/bin");
+    ASSERT(ret == 0);
+
+    fd1 = sys_creat(curr_scheduling_proc, "ls", 0x755);
+    ASSERT(fd1 >= 0);
+
+    fd2 = sys_open(curr_scheduling_proc, ".", O_RDWR, 0x755);
+    ASSERT(fd2 >= 0);
+
+    ret = sys_getdents(curr_scheduling_proc, fd2, &dir, DIR_LIMIT);
+    ASSERT(ret == sizeof(struct dirent) * 3);
+
+    ret = sys_close(curr_scheduling_proc, fd1);
+    ASSERT(ret == 0);
+
+    ret = sys_close(curr_scheduling_proc, fd2);
+    ASSERT(ret == 0);
 }
