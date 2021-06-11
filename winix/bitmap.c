@@ -443,7 +443,7 @@ void kreport_filp_bitmap(struct filp* file, unsigned int *p, int len){
     for( i = 0; i < len; i++){
         kprintf_filp(file, "0x%08x ",*p++);
         if((i+1) % 8 == 0)
-            kprintf("\n");
+            kprintf_filp(file, "\n");
     }
     kprintf_filp(file, "\n");
 }

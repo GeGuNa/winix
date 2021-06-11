@@ -249,7 +249,7 @@ void release_proc_mem(struct proc *who){
 }
 
 void kreport_ptable(struct proc* who){
-    kreport_bitmap(who->ctx.ptable, MEM_MAP_LEN);
+    kreport_bitmap(who->ctx.ptable, PTABLE_LEN);
 }
 
 void kreport_sysmap(){

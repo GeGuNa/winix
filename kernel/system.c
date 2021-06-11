@@ -21,6 +21,8 @@
 #include <sys/fcntl.h>
 #include <winix/welf.h>
 #include <fs/super.h>
+#include <winix/bitmap.h>
+#include <winix/dev.h>
 
 PRIVATE struct message m;
 PRIVATE int who_proc_nr;
@@ -280,6 +282,7 @@ int syscall_reply2(int syscall_num, int reply, int dest, struct message* m){
             kputd_buf(reply, buf);
         }
         klog("Syscall %s return %s to Proc %s[%d]\n",syscall_str[syscall_num] , p, pDest->name, dest);
+        // kreport_filp_bitmap(tty2_filp,  pDest->protection_table, PTABLE_LEN);
     }
     if(pDest){
         m->type = syscall_num;
